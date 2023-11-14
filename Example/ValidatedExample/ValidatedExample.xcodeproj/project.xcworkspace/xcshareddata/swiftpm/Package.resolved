@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "validated",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/anconaesselmann/Validated",
+      "state" : {
+        "revision" : "cb6d8278e5c1d0961e19c5562ef4004e2e261fb5",
+        "version" : "0.0.1"
+      }
+    }
+  ],
+  "version" : 2
+}
