@@ -4,22 +4,41 @@
 import Foundation
 
 @propertyWrapper
-public struct Validated<T, R> {
+public class Validated<T, R>: ObservableObject {
+
+    @Published
+    var value: ValidationResult<T, R>
 
     public var wrappedValue: ValidationResult<T, R> {
-        didSet {
-            switch wrappedValue {
+        get {
+            value
+        }
+        set {
+            switch newValue {
             case .raw(let raw):
-                wrappedValue = validator.validate(raw)
+                if let validator = validator {
+                    value = validator.validate(raw)
+                }
+            case .none, .valid, .validEmpty, .error:
+                value = newValue
+            }
+        }
+    }
+
+    public var validator: (any Validator<T, R>)? {
+        didSet {
+            switch value {
+            case .raw(let raw):
+                if let validator = validator {
+                    value = validator.validate(raw)
+                }
             case .none, .valid, .validEmpty, .error: ()
             }
         }
     }
 
-    private var validator: (any Validator<T, R>)
-
-    public init(wrappedValue: ValidationResult<T, R>, validator: any Validator<T, R>) {
+    public init(wrappedValue: ValidationResult<T, R>, validator: (any Validator<T, R>)? = nil) {
         self.validator = validator
-        self.wrappedValue = wrappedValue
+        self.value = wrappedValue
     }
 }

@@ -19,7 +19,6 @@ public enum ValidationResult<Value, Raw> {
         case .valid(let value): return value
         default: return nil
         }
-
     }
 
     public var isValid: Bool {
