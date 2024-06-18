@@ -1,3 +1,3 @@
 # Validated
 
-A utility for debugging Redraws in SwiftUI
+Validation with property wrappers.
